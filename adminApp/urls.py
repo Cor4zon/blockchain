@@ -5,6 +5,8 @@ from adminApp import views
 urlpatterns = [
     path('votings/', views.VotingList.as_view()),
     path('votings/<int:pk>/', views.VotingDetail.as_view()),
+    path('voters/', views.VoterList.as_view()),
+    path('voters/<int:pk>/', views.VoterDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

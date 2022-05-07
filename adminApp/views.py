@@ -51,3 +51,49 @@ class VotingDetail(APIView):
         voting = self.get_object(pk)
         voting.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class VoterList(APIView):
+    """
+    List all voters, or create a new voter.
+    """
+    def get(self, request, format=None):
+        voters = Voter.objects.all()
+        serializer = VoterSerializer(voters, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = VoterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VoterDetail(APIView):
+    """
+    Retrieve, update or delete a voter instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Voter.objects.get(pk=pk)
+        except Voter.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        voter = self.get_object(pk)
+        serializer = VotingSerializer(voter)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        voter = self.get_object(pk)
+        serializer = VotingSerializer(voter, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        voter = self.get_object(pk)
+        voter.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
