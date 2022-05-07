@@ -66,20 +66,5 @@ def mine(request):
     }
 
 
+
 blockchain = Blockchain()
-print(blockchain.chain)
-
-
-transaction1 = Transaction(pubkey1, privkey1, 1, pubkey3)
-transaction2 = Transaction(pubkey2, privkey2, 1, pubkey3)
-
-signature01 = transaction1.sign_transaction()
-
-new_transaction(None, {'voter_pubkey': pubkey1, 'option_pubkey': pubkey3,'voting_id': 1,  'signature': signature01})
-new_transaction(None, {'voter_pubkey': pubkey2, 'option_pubkey': pubkey3, 'voting_id': 1, 'signature': transaction2.sign_transaction()})
-
-
-
-print(f'blockchain: {blockchain.chain}')
-mine(None)
-print(f'blockchain: {blockchain.chain}')
