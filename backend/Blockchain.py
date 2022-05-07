@@ -15,6 +15,7 @@ MINING_DIFFICULTY = 2
 
 class Blockchain:
     def __init__(self):
+        # тут должна быть серьезная DB
         self.transactions = []
         self.chain = []
         self.nodes = set()
@@ -51,10 +52,10 @@ class Blockchain:
 
     def create_block(self, nonce, previous_hash):
         block = {'block_number': len(self.chain) + 1,
-                # 'timestamp': time(),
-                'transactions': self.transactions,
-                'nonce': nonce,
-                'previous_hash': previous_hash}
+                 # 'timestamp': time(),
+                 'transactions': self.transactions,
+                 'nonce': nonce,
+                 'previous_hash': previous_hash}
 
         # Reset the current list of transactions
         self.transactions = []

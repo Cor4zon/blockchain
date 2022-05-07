@@ -54,7 +54,6 @@ def mine(request):
     last_block = blockchain.chain[-1]
     nonce = blockchain.proof_of_work()
 
-
     previous_hash = blockchain.hash(last_block)
     block = blockchain.create_block(nonce, previous_hash)
 
@@ -72,13 +71,7 @@ print(blockchain.chain)
 
 
 transaction1 = Transaction(pubkey1, privkey1, 1, pubkey3)
-transaction01 = OrderedDict({'voter_pubkey': pubkey1,
-                           'option_pubkey': pubkey3})
-
 transaction2 = Transaction(pubkey2, privkey2, 1, pubkey3)
-transaction02 = OrderedDict({'voter_pubkey': pubkey1,
-                           'option_pubkey': pubkey3})
-
 
 signature01 = transaction1.sign_transaction()
 
