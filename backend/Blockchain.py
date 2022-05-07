@@ -29,7 +29,7 @@ class Blockchain:
         h = SHA.new(str(transaction).encode('utf8'))
         return verifier.verify(h, binascii.unhexlify(signature))
 
-    def submit_transaction(self, voter_pubkey, option_pubkey, signature):
+    def submit_transaction(self, voting_id, voter_pubkey, option_pubkey, signature):
         """
         Add a transaction to transactions array if the signature verified
 
@@ -38,7 +38,8 @@ class Blockchain:
         :param signature:
         :return:
         """
-        transaction = OrderedDict({'voter_pubkey': voter_pubkey,
+        transaction = OrderedDict({'voting_id': voting_id,
+                                   'voter_pubkey': voter_pubkey,
                                    'option_pubkey': option_pubkey})
 
         transaction_verification = self.verify_transaction_signature(voter_pubkey, signature, transaction)
@@ -60,7 +61,6 @@ class Blockchain:
 
         self.chain.append(block)
         return block
-
 
     def hash(self, block):
         """

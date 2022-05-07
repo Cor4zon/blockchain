@@ -21,12 +21,12 @@ def new_transaction(request, transaction_data):
     values = transaction_data
     print(f'values: {values}')
 
-    required = ['voter_pubkey', 'option_pubkey', 'signature']
+    required = ['voting_id', 'voter_pubkey', 'option_pubkey', 'signature']
     if not all(k in values for k in required):
         return 'Missing values', 400
 
     # Create a new Transaction
-    transaction_result = blockchain.submit_transaction(values['voter_pubkey'], values['option_pubkey'],
+    transaction_result = blockchain.submit_transaction(values['voting_id'], values['voter_pubkey'], values['option_pubkey'],
                                                        values['signature'])
 
     if transaction_result == False:
@@ -71,19 +71,19 @@ blockchain = Blockchain()
 print(blockchain.chain)
 
 
-transaction1 = Transaction(pubkey1, privkey1, pubkey3)
+transaction1 = Transaction(pubkey1, privkey1, 1, pubkey3)
 transaction01 = OrderedDict({'voter_pubkey': pubkey1,
                            'option_pubkey': pubkey3})
 
-transaction2 = Transaction(pubkey2, privkey2, pubkey3)
+transaction2 = Transaction(pubkey2, privkey2, 1, pubkey3)
 transaction02 = OrderedDict({'voter_pubkey': pubkey1,
                            'option_pubkey': pubkey3})
 
 
 signature01 = transaction1.sign_transaction()
 
-new_transaction(None, {'voter_pubkey': pubkey1, 'option_pubkey': pubkey3, 'signature': signature01})
-new_transaction(None, {'voter_pubkey': pubkey2, 'option_pubkey': pubkey3, 'signature': transaction2.sign_transaction()})
+new_transaction(None, {'voter_pubkey': pubkey1, 'option_pubkey': pubkey3,'voting_id': 1,  'signature': signature01})
+new_transaction(None, {'voter_pubkey': pubkey2, 'option_pubkey': pubkey3, 'voting_id': 1, 'signature': transaction2.sign_transaction()})
 
 
 
