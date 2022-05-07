@@ -14,7 +14,6 @@ class Transaction:
         self.voter_privkey = voter_privkey
         self.option_pubkey = option_pubkey
 
-
     def to_dict(self):
         return OrderedDict({'voter_pubkey': self.voter_pubkey,
                             'option_pubkey': self.option_pubkey})

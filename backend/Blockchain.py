@@ -20,7 +20,6 @@ class Blockchain:
         self.nodes = set()
         self.create_block(0, '00')
 
-
     def register_node(self, node_url):
         pass
 

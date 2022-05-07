@@ -12,6 +12,12 @@ def index(request):
 
 
 def new_transaction(request, transaction_data):
+    """
+
+    :param request:
+    :param transaction_data: format({'voter_pubkey': pubkey1, 'option_pubkey': pubkey3, 'signature': signature01})
+    :return:
+    """
     values = transaction_data
     print(f'values: {values}')
 
