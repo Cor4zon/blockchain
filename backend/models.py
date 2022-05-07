@@ -14,7 +14,7 @@ class VotingOption(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField()
     voting = models.ForeignKey(Voting, on_delete = models.CASCADE, default=None)
-    pubkey = models.TextField()
+    pubkey = models.TextField(unique=True)
     privkey = models.TextField()
 
     def __str__(self):
@@ -22,8 +22,9 @@ class VotingOption(models.Model):
 
 
 class Voter(models.Model):
-    pubkey = models.TextField()
-    voteFor = models.ForeignKey(VotingOption, on_delete=models.CASCADE, default=None)
+    pubkey = models.TextField(unique=True)
+    voting = models.ForeignKey(Voting, on_delete=models.CASCADE, default=1, null=True, blank=True)
+    voteFor = models.ForeignKey(VotingOption, on_delete=models.CASCADE, default=None, null=True, blank=True)
 
     def __str__(self):
         return str(self.pubkey)
