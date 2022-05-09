@@ -1,5 +1,7 @@
 import abc
 
+from backend.models import Voting, Voter, VotingOption
+
 
 class AbstractRepository(abc.ABC):
     @classmethod
@@ -36,11 +38,21 @@ class AbstractRepository(abc.ABC):
 class VotingRepository(AbstractRepository):
     @classmethod
     def create(cls, item):
-        pass
+        voting = Voting(
+            item["id"],
+            item["title"],
+            item["description"],
+            item["deadline"]
+        )
+        voting.save()
 
     @classmethod
-    def read(cls):
-        pass
+    def read(cls, pk):
+        return Voting.objects.filter(pk=pk)
+
+    @classmethod
+    def read_all(cls):
+        return Voting.objects.all()
 
     @classmethod
     def read_filtered(cls, filter_dict):
@@ -48,12 +60,19 @@ class VotingRepository(AbstractRepository):
 
     @classmethod
     def delete(cls, pk):
-        pass
+        Voting.objects.filter(pk=pk).delete()
 
     @classmethod
     def update(cls, pk, data):
-        pass
+        Voting.objects.filter(pk=pk).update(**data)
 
+
+class VoterRepository:
+    pass
+
+
+class VotingOptionRepository:
+    pass
 
 class CustomService():
     def __init__(self, repository):
@@ -79,3 +98,5 @@ class CustomService():
 
 
 VotingService = CustomService(VotingRepository)
+VoterService = CustomService(VoterRepository)
+VotingOptionService = CustomService(VotingOptionRepository)
