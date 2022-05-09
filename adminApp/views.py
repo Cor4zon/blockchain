@@ -30,7 +30,7 @@ class VotingDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return Voting.objects.get(pk=pk)
+            return VotingService.read(pk)
         except Voting.DoesNotExist:
             raise Http404
 
@@ -40,16 +40,17 @@ class VotingDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        voting = self.get_object(pk)
-        serializer = VotingSerializer(voting, data=request.data)
+        new_voting = request.data
+        VotingService.update(pk, new_voting)
+        serializer = VotingSerializer(data=new_voting)
+
         if serializer.is_valid():
-            serializer.save()
             return Response(serializer.data)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        voting = self.get_object(pk)
-        voting.delete()
+        VotingService.delete(pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

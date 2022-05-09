@@ -48,7 +48,7 @@ class VotingRepository(AbstractRepository):
 
     @classmethod
     def read(cls, pk):
-        return Voting.objects.filter(pk=pk)
+        return Voting.objects.filter(pk=pk)[0]
 
     @classmethod
     def read_all(cls):
