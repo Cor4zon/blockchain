@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from backend.models import Voting, Voter, VotingOption
-from backend.repository.repository import VotingService
+from backend.repository.repository import VotingService, VoterService, VotingOptionService
 from backend.serializers import VotingSerializer, VoterSerializer, VotingOptionSerializer
 
 
@@ -59,7 +59,7 @@ class VoterList(APIView):
     List all voters, or create a new voter.
     """
     def get(self, request, format=None):
-        voters = Voter.objects.all()
+        voters = VoterService.read_all()
         serializer = VoterSerializer(voters, many=True)
         return Response(serializer.data)
 
@@ -77,7 +77,7 @@ class VoterDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return Voter.objects.get(pk=pk)
+            return VoterService.read(pk)
         except Voter.DoesNotExist:
             raise Http404
 
@@ -87,23 +87,25 @@ class VoterDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        voter = self.get_object(pk)
-        serializer = VoterSerializer(voter, data=request.data)
+        new_voter = request.data
+        VoterService.update(pk, new_voter)
+        serializer = VoterService(data=new_voter)
+
         if serializer.is_valid():
-            serializer.save()
             return Response(serializer.data)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         voter = self.get_object(pk)
-        voter.delete()
+        VoterService.delete(pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class VotingOptionList(APIView):
     def get(self, request, format=None):
-        voting_options = VotingOptionSerializer.objects.all()
-        serializer = VoterSerializer(voting_options, many=True)
+        voting_options = VotingOptionService.read_all()
+        serializer = VotingOptionSerializer(voting_options, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
