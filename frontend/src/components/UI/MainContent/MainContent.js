@@ -10,14 +10,12 @@ const MainContent = () => {
             <Link to="voting">
                 <ActionCard text={"Создать голосование"} />
             </Link>
-
             <Link to="voter">
                 <ActionCard text={"Добавить кандидатов"} />
             </Link>
             <Link to="voting_option">
                 <ActionCard text={"Добавить голосующих"} />
             </Link>
-
         </div>
     );
 };

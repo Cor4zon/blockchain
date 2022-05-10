@@ -24,7 +24,7 @@ const VotingForm = () => {
         event.preventDefault();
 
         client.addVoting(title, description, deadline).then(() => {
-            console.log('ok');
+            console.log('voting added');
         });
     }
 
