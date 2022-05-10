@@ -46,6 +46,44 @@ class APIClient {
             })
         )
     }
+
+    fetchVoters() {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voters/');
+        return Promise.resolve(
+            wrapper.get()
+                .catch((error) => {
+                    this.storage.clear();
+                    console.error(error);
+                    return Promise.reject(error);
+                })
+        )
+    }
+
+    addVoter(pubkey, voting) {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voters/');
+        if (pubkey.length > 0) {
+            return Promise.resolve(
+                wrapper.post(
+                    {
+                        pubkey: pubkey,
+                        voting: voting
+                    }
+                ).catch((error) => console.error(error.response) )
+            )
+        } else {
+            return Promise.reject("Please, enter information");
+        }
+    }
+
+    deleteVoter(id) {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voters/' + id);
+        return Promise.resolve(
+            wrapper.delete().catch((error) => {
+                console.error(error);
+                return Promise.reject(error);
+            })
+        )
+    }
 }
 
 export default APIClient;
