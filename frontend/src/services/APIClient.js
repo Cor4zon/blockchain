@@ -84,6 +84,47 @@ class APIClient {
             })
         )
     }
+
+    fetchVotingOption() {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voting_options/');
+        return Promise.resolve(
+            wrapper.get()
+                .catch((error) => {
+                    this.storage.clear();
+                    console.error(error);
+                    return Promise.reject(error);
+                })
+        )
+    }
+
+    addVotingOption(title, description, voting, pubkey, privkey) {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voting_options/');
+        if (pubkey.length > 0) {
+            return Promise.resolve(
+                wrapper.post(
+                    {
+                        title: title,
+                        description: description,
+                        voting: voting,
+                        pubkey: pubkey,
+                        privkey: privkey
+                    }
+                ).catch((error) => console.error(error.response) )
+            )
+        } else {
+            return Promise.reject("Please, enter information");
+        }
+    }
+
+    deleteVotingOption(id) {
+        const wrapper = new AxiosWrapper('http://localhost:8000/adminApp/voting_options/' + id);
+        return Promise.resolve(
+            wrapper.delete().catch((error) => {
+                console.error(error);
+                return Promise.reject(error);
+            })
+        )
+    }
 }
 
 export default APIClient;
