@@ -1,0 +1,8 @@
+
+.action_card {
+    width: 30%;
+    height: 400px;
+    border: 2px black solid;
+    border-radius: 8px;
+    margin: 3rem;
+}
