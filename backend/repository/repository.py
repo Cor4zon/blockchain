@@ -1,4 +1,5 @@
 import abc
+import random
 
 from backend.models import Voting, Voter, VotingOption
 
@@ -39,7 +40,7 @@ class VotingRepository(AbstractRepository):
     @classmethod
     def create(cls, item):
         voting = Voting(
-            item["id"],
+            random.randint(0,100),
             item["title"],
             item["description"],
             item["deadline"]
@@ -71,7 +72,7 @@ class VoterRepository:
     @classmethod
     def create(cls, item):
         voter = Voter(
-            item["id"],
+            random.randint(0,100),
             item["pubkey"],
             item["voting_id"]
         )
@@ -102,7 +103,7 @@ class VotingOptionRepository:
     @classmethod
     def create(cls, item):
         voting_option = Voter(
-            item["id"],
+            random.randint(0,100),
             item["title"],
             item["voting"],
             item["pubkey"],
