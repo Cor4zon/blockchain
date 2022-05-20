@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'backend',
-    'adminApp'
+    'adminApp',
+    'minerApp',
 ]
 
 MIDDLEWARE = [
