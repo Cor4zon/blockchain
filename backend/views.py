@@ -1,12 +1,7 @@
-from collections import OrderedDict
-
-
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from backend.Blockchain import Blockchain
 from backend.models import VotingOption, Voter
-from backend.Transaction import Transaction
-from backend.keys import *
 
 from Crypto.PublicKey import RSA
 import Crypto
