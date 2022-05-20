@@ -1,0 +1,9 @@
+
+
+.content {
+    width: 100%;
+    height: 80%;
+    background: burlywood;
+
+    display: flex;
+}
