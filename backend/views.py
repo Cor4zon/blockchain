@@ -1,10 +1,11 @@
 from collections import OrderedDict
 
-from django.http import HttpResponse
+
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from backend.Blockchain import Blockchain
+from backend.models import VotingOption, Voter
 from backend.Transaction import Transaction
-
 from backend.keys import *
 
 from Crypto.PublicKey import RSA
@@ -85,6 +86,25 @@ def mine(request):
         'previous_hash': block['previous_hash'],
     }
 
+
+def get_results(request, pk):
+    # voting_id = 1 # заглушка
+    voting_id = pk
+    voting_options = VotingOption.objects.filter(voting_id=voting_id)
+    voters = Voter.objects.all()
+    voting_result = {}
+
+    for i in range(len(voting_options)):
+        voting_result[voting_options[i].id] = 0
+
+    for i in range(len(voters)):
+        voteFor = voters[i].voteFor_id
+        if voteFor in voting_result:
+            voting_result[voteFor] += 1
+
+    print(voting_result)
+
+    return JsonResponse(voting_result)
 
 
 blockchain = Blockchain()
