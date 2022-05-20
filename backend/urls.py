@@ -6,5 +6,6 @@ app_name = "blockchain"
 
 urlpatterns = [
     path('', views.index, name="home"),
-
+    path('keys', views.new_keys, name="keys"),
+    path('result/<int:pk>', views.get_results, name="result"),
 ]
