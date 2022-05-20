@@ -7,8 +7,28 @@ from backend.Transaction import Transaction
 
 from backend.keys import *
 
+from Crypto.PublicKey import RSA
+import Crypto
+import binascii
+
+
 def index(request):
     return render(request, "index.html", context={"chain": blockchain.chain})
+
+
+def new_keys(request):
+    random_gen = Crypto.Random.new().read
+    private_key = RSA.generate(1024, random_gen)
+    public_key = private_key.publickey()
+    response = {
+        'private_key': binascii.hexlify(private_key.exportKey(format='DER')).decode('ascii'),
+        'public_key': binascii.hexlify(public_key.exportKey(format='DER')).decode('ascii')
+    }
+
+    print(private_key)
+    print(public_key)
+
+    return JsonResponse(response)
 
 
 def new_transaction(request, transaction_data):
