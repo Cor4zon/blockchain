@@ -1,5 +1,4 @@
 from backend.Transaction import Transaction
-
 from backend.views import new_transaction
 
 

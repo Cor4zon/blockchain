@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -86,15 +86,11 @@ class VoterDetail(APIView):
         serializer = VoterSerializer(voter)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def patch(self, request, pk, format=None):
         new_voter = request.data
         VoterService.update(pk, new_voter)
-        serializer = VoterService(data=new_voter)
 
-        if serializer.is_valid():
-            return Response(serializer.data)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse(new_voter);
 
     def delete(self, request, pk, format=None):
         voter = self.get_object(pk)
