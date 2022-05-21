@@ -83,7 +83,6 @@ def mine(request):
 
 
 def get_results(request, pk):
-    # voting_id = 1 # заглушка
     voting_id = pk
     voting_options = VotingOption.objects.filter(voting_id=voting_id)
     voters = Voter.objects.all()
@@ -98,7 +97,6 @@ def get_results(request, pk):
             voting_result[voteFor] += 1
 
     print(voting_result)
-
     return JsonResponse(voting_result)
 
 
