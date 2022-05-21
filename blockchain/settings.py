@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'backend',
     'adminApp',
     'minerApp',
+    'voterApp',
 ]
 
 MIDDLEWARE = [
