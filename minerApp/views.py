@@ -1,5 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from backend.Blockchain import Blockchain
 from backend.models import VotingOption, Voter
 
@@ -18,10 +20,8 @@ def get_transactions(request):
 def full_chain(request):
     pass
 
-
+@csrf_exempt
 def mine(request):
-    if (request.method != 'GET'):
-        return
 
     last_block = blockchain.chain[-1]
     nonce = blockchain.proof_of_work()
@@ -37,4 +37,4 @@ def mine(request):
         'previous_hash': block['previous_hash'],
     }
 
-
+    return JsonResponse(response)
