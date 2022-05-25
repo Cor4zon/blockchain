@@ -15,7 +15,6 @@ MINING_DIFFICULTY = 2
 
 class Blockchain:
     def __init__(self):
-        # тут должна быть серьезная DB
         self.transactions = []
         self.chain = []
         self.nodes = set()
@@ -30,7 +29,7 @@ class Blockchain:
         h = SHA.new(str(transaction).encode('utf8'))
         return verifier.verify(h, binascii.unhexlify(signature))
 
-    def submit_transaction(self, voting_id, voter_pubkey, option_pubkey, signature):
+    def submit_transaction(self, voting_id, voter_pubkey, choice, signature):
         """
         Add a transaction to transactions array if the signature verified
 
@@ -41,13 +40,17 @@ class Blockchain:
         """
         transaction = OrderedDict({'voting_id': voting_id,
                                    'voter_pubkey': voter_pubkey,
-                                   'option_pubkey': option_pubkey})
+                                   'choice': choice})
+
+
 
         transaction_verification = self.verify_transaction_signature(voter_pubkey, signature, transaction)
         if transaction_verification:
+            print('verification is okey')
             self.transactions.append(transaction)
             return len(self.chain) + 1
         else:
+            print('NOT OKEY')
             return False
 
     def create_block(self, nonce, previous_hash):

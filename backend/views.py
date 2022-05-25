@@ -32,18 +32,18 @@ def new_transaction(request, transaction_data):
     """
 
     :param request:
-    :param transaction_data: format({'voter_pubkey': pubkey1, 'option_pubkey': pubkey3, 'signature': signature01})
+    :param transaction_data: format({'voting_id': voting_id,'voter_pubkey': pubkey1, 'option_pubkey': pubkey3, 'signature': signature01})
     :return:
     """
     values = transaction_data
     print(f'values: {values}')
 
-    required = ['voting_id', 'voter_pubkey', 'option_pubkey', 'signature']
+    required = ['voting_id', 'voter_pubkey', 'choice', 'signature']
     if not all(k in values for k in required):
         return 'Missing values', 400
 
     # Create a new Transaction
-    transaction_result = blockchain.submit_transaction(values['voting_id'], values['voter_pubkey'], values['option_pubkey'],
+    transaction_result = blockchain.submit_transaction(values['voting_id'], values['voter_pubkey'], values['choice'],
                                                        values['signature'])
 
     if transaction_result == False:
@@ -86,3 +86,59 @@ def get_results(request, pk):
 
 
 blockchain = Blockchain()
+blockchain.transactions = [
+    {
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 17
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 18
+    },
+{
+        "voting_id": 10,
+        "voter_pubkey": "30819f300d06092a864886f70d010101050003818d0030818902818100d22878abdd0cfad53a7dada3b80ddfb4b70b91742a48332aadcb7b86d9e123d91e6f7488625188050a0f290584a9414c8433901b384b499318a0abdbc346261e58f20f612763d71630991ed622f8bd5ecee78e230ce9b0a878248bfc6e2a90ea22e002a2bdc4777fba22dd0a83030f2055752ef7d3f7a7cf7d5ef4dac646909f0203010001",
+        "choice": 18
+    }
+        ]
+
+
+print(blockchain)
+print(blockchain.transactions)
