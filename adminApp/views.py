@@ -7,6 +7,8 @@ from backend.models import Voting, Voter, VotingOption
 from backend.repository.repository import VotingService, VoterService, VotingOptionService
 from backend.serializers import VotingSerializer, VoterSerializer, VotingOptionSerializer
 
+from backend.views import blockchain
+
 
 class VotingList(APIView):
     """
@@ -136,3 +138,22 @@ class VotingOptionDetail(APIView):
         voting_option = self.get_object(pk)
         voting_option.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def voting_result(request, pk):
+    candidates = VotingOptionService.read_all()
+    results = {}
+
+    for i in range(len(candidates)):
+        if candidates[i].voting_id == pk:
+            results[candidates[i].id] = 0
+
+    transactions = []
+    for i in range(len(blockchain.chain)):
+        transactions.extend(blockchain.chain[i]['transactions'])
+
+    for i in range(len(transactions)):
+        if transactions[i]['choice'] in results:
+            results[transactions[i]['choice']] += 1
+
+    return JsonResponse(results)

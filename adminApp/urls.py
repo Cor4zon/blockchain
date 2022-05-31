@@ -5,6 +5,7 @@ from adminApp import views
 urlpatterns = [
     path('votings/', views.VotingList.as_view()),
     path('votings/<int:pk>/', views.VotingDetail.as_view()),
+    path('votings/<int:pk>/results', views.voting_result, name='voting_result'),
     path('voters/', views.VoterList.as_view()),
     path('voters/<int:pk>/', views.VoterDetail.as_view()),
     path('voting_options/', views.VotingOptionList.as_view()),
